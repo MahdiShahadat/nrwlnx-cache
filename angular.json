@@ -1,0 +1,174 @@
+{
+  "version": 1,
+  "projects": {
+    "learning-path": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/learning-path",
+      "sourceRoot": "apps/learning-path/src",
+      "prefix": "my-workspace",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/learning-path",
+            "index": "apps/learning-path/src/index.html",
+            "main": "apps/learning-path/src/main.ts",
+            "polyfills": "apps/learning-path/src/polyfills.ts",
+            "tsConfig": "apps/learning-path/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/learning-path/src/favicon.ico",
+              "apps/learning-path/src/assets"
+            ],
+            "styles": ["apps/learning-path/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/learning-path/src/environments/environment.ts",
+                  "with": "apps/learning-path/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "learning-path:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "learning-path:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "learning-path:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/learning-path/tsconfig.app.json",
+              "apps/learning-path/tsconfig.spec.json",
+              "apps/learning-path/tsconfig.editor.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/learning-path/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/learning-path/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "learning-path-e2e": {
+      "root": "apps/learning-path-e2e",
+      "sourceRoot": "apps/learning-path-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/learning-path-e2e/cypress.json",
+            "tsConfig": "apps/learning-path-e2e/tsconfig.e2e.json",
+            "devServerTarget": "learning-path:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "learning-path:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/learning-path-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/learning-path-e2e/**/*"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "learning-path"
+}
